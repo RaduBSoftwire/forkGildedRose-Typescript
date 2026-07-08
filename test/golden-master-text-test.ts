@@ -38,13 +38,19 @@ describe('Regular items', function () {
 describe('Sulfuras', function () {
 
     it('sellIn decrementation', function() {
-        const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 30, 20)]);
+        const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros', 30, 80)]);
         const items = gildedRose.updateQuality();
         expect(items[0].sellIn).to.equal(30);
     });
 
-    it('Quality decay', function() {
+    it('Quality decay before 0 sellIn', function() {
         const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros',30, 80)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(80);
+    });
+
+    it('Quality decay after 0 sellIn', function() {
+        const gildedRose = new GildedRose([new Item('Sulfuras, Hand of Ragnaros',0, 80)]);
         const items = gildedRose.updateQuality();
         expect(items[0].quality).to.equal(80);
     });
@@ -116,6 +122,13 @@ describe('Backstage passes', function () {
         const items = gildedRose.updateQuality();
 
         expect(items[0].quality).to.equal(0);
+    });
+
+    it('Quality cannot go further than 50', function() {
+        const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 20, 50)]);
+        const items = gildedRose.updateQuality();
+
+        expect(items[0].quality).to.equal(50);
     });
 
 });
