@@ -133,26 +133,33 @@ describe('Backstage passes', function () {
 
 });
 
-// describe('Conjured', function () {
-//
-//     it('sellIn decrementation', function() {
-//         const gildedRose = new GildedRose([new Item('Conjured', 30, 20)]);
-//         const items = gildedRose.updateQuality();
-//         expect(items[0].sellIn).to.equal(29);
-//     });
-//
-//     it('Quality decay', function() {
-//         const gildedRose = new GildedRose([new Item('Conjured',15, 20)]);
-//         const items = gildedRose.updateQuality();
-//
-//         expect(items[0].quality).to.equal(18);
-//     });
-//
-//     it('Quality cannot go below 0', function() {
-//         const gildedRose = new GildedRose([new Item('Conjured', 30, 0)]);
-//         const items = gildedRose.updateQuality();
-//
-//         expect(items[0].quality).to.equal(0);
-//     });
-//
-// });
+describe('Conjured', function () {
+
+    it('sellIn decrementation', function() {
+        const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 30, 20)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].sellIn).to.equal(29);
+    });
+
+    it('Quality decay before 0 sellIn', function() {
+        const gildedRose = new GildedRose([new Item('Conjured Mana Cake',15, 20)]);
+        const items = gildedRose.updateQuality();
+
+        expect(items[0].quality).to.equal(18);
+    });
+
+    it('Quality decay after 0 sellIn', function() {
+        const gildedRose = new GildedRose([new Item('Conjured Mana Cake',0, 40)]);
+        const items = gildedRose.updateQuality();
+
+        expect(items[0].quality).to.equal(36);
+    });
+
+    it('Quality cannot go below 0', function() {
+        const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 30, 0)]);
+        const items = gildedRose.updateQuality();
+
+        expect(items[0].quality).to.equal(0);
+    });
+
+});

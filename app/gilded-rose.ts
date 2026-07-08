@@ -51,6 +51,12 @@ export class GildedRose {
                     case  'Sulfuras, Hand of Ragnaros':
                         break;
 
+                    case  'Conjured Mana Cake':
+                        if (this.items[i].quality > 0) {
+                            this.items[i].quality = this.items[i].quality - 2
+                        }
+                        break;
+
                     default:
                         if (this.items[i].quality > 0) {
                             this.items[i].quality = this.items[i].quality - 1
@@ -74,6 +80,12 @@ export class GildedRose {
                         break;
 
                     case  'Sulfuras, Hand of Ragnaros':
+                        break;
+
+                    case  'Conjured Mana Cake':
+                        if (this.items[i].quality > 0) {
+                            this.items[i].quality = this.items[i].quality - 4
+                        }
                         break;
 
                     default:
