@@ -27,10 +27,16 @@ describe('Regular items', function () {
         expect(items[0].quality).to.equal(0);
     });
 
-    it('Quality decay after sellIn < 0', function() {
+    it('Quality decay after sellIn < 0, quality < 50', function() {
         const gildedRose = new GildedRose([new Item('other', 0, 20)]);
         const items = gildedRose.updateQuality();
         expect(items[0].quality).to.equal(18);
+    });
+
+    it('Quality decay after sellIn < 0, quality = 0', function() {
+        const gildedRose = new GildedRose([new Item('other', 0, 0)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(0);
     });
 
 });
@@ -71,10 +77,16 @@ describe('Aged Brie', function () {
         expect(items[0].quality).to.equal(21);
     });
 
-    it('Quality decay after 0 sellIn', function() {
+    it('Quality decay after 0 sellIn, quality < 50', function() {
         const gildedRose = new GildedRose([new Item('Aged Brie',0, 20)]);
         const items = gildedRose.updateQuality();
         expect(items[0].quality).to.equal(22);
+    });
+
+    it('Quality decay after 0 sellIn, quality > 50', function() {
+        const gildedRose = new GildedRose([new Item('Aged Brie',0, 50)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).to.equal(50);
     });
 
     it('Quality cannot go below 0', function() {
@@ -148,11 +160,18 @@ describe('Conjured', function () {
         expect(items[0].quality).to.equal(18);
     });
 
-    it('Quality decay after 0 sellIn', function() {
+    it('Quality decay after 0 sellIn, quality > 0', function() {
         const gildedRose = new GildedRose([new Item('Conjured Mana Cake',0, 40)]);
         const items = gildedRose.updateQuality();
 
         expect(items[0].quality).to.equal(36);
+    });
+
+    it('Quality decay after 0 sellIn, quality = 0', function() {
+        const gildedRose = new GildedRose([new Item('Conjured Mana Cake',0, 0)]);
+        const items = gildedRose.updateQuality();
+
+        expect(items[0].quality).to.equal(0);
     });
 
     it('Quality cannot go below 0', function() {
@@ -160,6 +179,16 @@ describe('Conjured', function () {
         const items = gildedRose.updateQuality();
 
         expect(items[0].quality).to.equal(0);
+    });
+
+});
+
+describe('Constructor Test', function () {
+
+    it('Constructor', function() {
+        const gildedRose = new GildedRose();
+        const items = gildedRose.updateQuality();
+        expect(gildedRose.items.length).to.equal(0);
     });
 
 });
